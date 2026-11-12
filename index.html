@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#315d42">
+<meta name="description" content="好きなものを、ちゃんと好きでいるためのお小遣いノート。">
+<link rel="manifest" href="manifest.webmanifest">
+<title>こもれび手帳</title>
+<style>
+:root{--green:#315d42;--leaf:#6f9b69;--mint:#eaf2e7;--cream:#fbfaf3;--ink:#29362c;--muted:#788278;--line:#e2e8dc;--red:#b75a4a;--gold:#d6a64a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#edf4e9 0,#f8f8f0 260px);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif}main{max-width:760px;margin:auto;padding:18px 14px 55px}
+.hero{background:linear-gradient(135deg,#315d42,#73986c);color:white;border-radius:24px;padding:23px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:170px;height:170px;border:1px solid #ffffff40;border-radius:50%;right:-40px;top:-70px;box-shadow:0 0 0 20px #ffffff10,0 0 0 40px #ffffff10}.kicker{font-size:10px;letter-spacing:.16em;opacity:.8}.hero h1{font-size:26px;margin:8px 0 4px}.hero p{font-size:12px;margin:0;opacity:.9}.sprout{position:absolute;right:18px;bottom:8px;font-size:42px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:19px;padding:16px;margin:13px 0;box-shadow:0 3px 14px #304b3010}.panel h2{font-size:15px;color:var(--green);margin:0 0 13px}.month{display:flex;justify-content:space-between;align-items:center;margin:17px 2px 10px;gap:10px}.month input{max-width:160px}
+input,select{width:100%;border:1px solid #dce4d8;border-radius:11px;padding:11px;background:white;color:var(--ink);font:inherit;font-size:14px;min-width:0}label{font-size:12px;color:#5e6d60;font-weight:650;display:block;margin-bottom:5px}.field{margin-bottom:10px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:var(--cream);border-radius:13px;padding:12px}.stat small{display:block;color:var(--muted);font-size:11px}.stat strong{display:block;font-size:20px;margin-top:4px}.sub{font-size:10px;color:var(--muted)}.bar{height:9px;background:#edf0e9;border-radius:99px;overflow:hidden;margin:13px 0 7px}.bar span{display:block;height:100%;background:linear-gradient(90deg,#7ca978,#315d42);width:0}
+.notice{background:var(--mint);color:var(--green);padding:10px 12px;border-radius:11px;font-size:12px}.notice.warn{background:#fff3df;color:#8a5a16}.notice.over{background:#fbe9e6;color:#963e34}
+button{border:0;border-radius:12px;padding:12px 14px;background:var(--green);color:#fff;font:inherit;font-weight:700;cursor:pointer}button.secondary{background:#edf3e9;color:var(--green)}button.danger{background:#fff0ed;color:#9a4c40;padding:7px 10px;font-size:11px}.full{width:100%}.hint{font-size:11px;color:var(--muted);line-height:1.5}.check{display:flex;align-items:center;gap:8px;background:#f6f8f3;padding:10px;border-radius:11px;font-size:12px}.check input{width:18px;height:18px;accent-color:var(--green)}
+.entry{border:1px solid var(--line);border-radius:13px;padding:12px;margin:8px 0;display:grid;grid-template-columns:1fr auto;gap:8px}.entry h3{font-size:13px;margin:0 0 4px}.meta{font-size:11px;color:var(--muted);line-height:1.6}.price{font-weight:750;text-align:right}.stars{color:#d19b35;font-size:12px}.empty{text-align:center;color:var(--muted);background:#fafbf7;border-radius:12px;padding:20px;font-size:12px}.rank{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{font-size:11px;padding:9px 10px}.footer{text-align:center;font-size:10px;color:var(--muted);line-height:1.7;padding:15px 4px}
+@media(max-width:420px){main{padding:12px 10px 45px}.panel{padding:13px}.hero{padding:20px}.hero h1{font-size:23px}}
+</style>
+</head>
+<body><main>
+<header class="hero"><div class="kicker">MY LITTLE SPENDING JOURNAL</div><h1>こもれび手帳</h1><p>好きなものを、ちゃんと好きでいるためのお小遣いノート。</p><div class="sprout">🌱</div></header>
+<div class="month"><strong>🌿 今月の記録</strong><input id="month" type="month" aria-label="表示月"></div>
+<section class="panel"><h2>🍃 お小遣いのようす</h2><div class="field"><label for="budget">月間予算（円）</label><input id="budget" type="number" min="0" step="500" value="15000"></div>
+<div class="grid"><div class="stat"><small>今月使った金額</small><strong id="spent">¥0</strong><div class="sub">記録した買い物</div></div><div class="stat"><small>予算の残り</small><strong id="remaining">¥15,000</strong><div class="sub" id="percent">使用率 0%</div></div><div class="stat"><small>平均満足度</small><strong id="average">—</strong><div class="sub">評価済みの買い物</div></div><div class="stat"><small>送料対策の追加分</small><strong id="shippingTotal">¥0</strong><div class="sub">追加した商品の金額</div></div></div>
+<div class="bar"><span id="bar"></span></div><div id="alert" class="notice">まずは買い物を記録してみよう。</div></section>
+<section class="panel"><h2>📝 買い物を記録する</h2><form id="form">
+<div class="field"><label for="item">何を買った？</label><input id="item" required maxlength="70" placeholder="例：ピクミンの靴下"></div>
+<div class="grid"><div class="field"><label for="amount">金額（円）</label><input id="amount" type="number" min="0" required placeholder="1500"></div><div class="field"><label for="date">購入日</label><input id="date" type="date" required></div></div>
+<div class="field"><label for="reason">買った理由</label><select id="reason"><option>本当に欲しかった</option><option>好奇心・体験</option><option>日常の定番</option><option>プレゼント</option><option>衝動買い</option><option>送料対策・ついで買い</option><option>その他</option></select></div>
+<div class="field"><label for="rating">買ってよかった度</label><select id="rating"><option value="">あとで評価する</option><option value="5">★★★★★ とても満足</option><option value="4">★★★★☆ 満足</option><option value="3">★★★☆☆ ふつう</option><option value="2">★★☆☆☆ ちょっと後悔</option><option value="1">★☆☆☆☆ 買わなくてもよかった</option></select></div>
+<div class="field"><label class="check"><input id="shipcheck" type="checkbox"> 送料無料のために追加した商品がある</label></div>
+<div class="field"><label for="extra">送料対策で追加した金額（円）</label><input id="extra" type="number" min="0" value="0"></div>
+<div class="field"><label for="memo">ひとことメモ（任意）</label><input id="memo" maxlength="120" placeholder="試せてうれしい！"></div>
+<button class="full" type="submit">🌱 この買い物を記録する</button></form></section>
+<section class="panel"><h2>🔎 今月の買い物分析</h2><div class="grid"><div class="stat"><small>衝動買い</small><strong id="impulse">¥0</strong></div><div class="stat"><small>ついで買い</small><strong id="extras">¥0</strong></div><div class="stat"><small>買い物件数</small><strong id="count">0件</strong></div><div class="stat"><small>★1〜2の件数</small><strong id="regret">0件</strong></div></div></section>
+<section class="panel"><h2>🏆 今月の満足度ランキング</h2><div id="ranking" class="empty">買い物を評価するとランキングが育つよ。</div></section>
+<section class="panel"><h2>📚 買い物の記録</h2><div class="actions" style="margin-bottom:10px"><button class="secondary" id="all">全期間</button><button class="secondary" id="current">今月だけ</button></div><div id="entries" class="empty">まだ記録がないよ 🌿</div></section>
+<section class="panel"><h2>🛡️ データの保護・引き継ぎ</h2><p class="hint">記録はIndexedDBに自動保存。機種変更の前にバックアップをダウンロードし、新しいスマホで復元してね。</p>
+<div class="actions"><button id="backup">JSONバックアップ</button><button class="secondary" id="restoreBtn">バックアップを復元</button><input id="restoreFile" type="file" accept=".json,application/json" hidden></div>
+<p class="hint" style="margin-top:10px">旧版のCSV記録も読み込めるよ。</p><div class="actions"><button class="secondary" id="csvIn">旧版CSVを読み込む</button><input id="csvFile" type="file" accept=".csv,text/csv" hidden><button class="secondary" id="csvOut">CSVを書き出す</button></div>
+<div id="backupStatus" class="notice" style="margin-top:12px">データ保存先を準備中…</div></section>
+<div class="footer">こもれび手帳 v2 · データはこのブラウザ内に保存されます。<br>機種変更・ブラウザ変更の前には必ずJSONバックアップを保管してください。</div>
+</main>
+<script>
+const DB='komorebi-techo', STORE='records', META='settings', VERSION=1;
+let db,records=[],settings={budget:15000},allMonths=false;
+const $=id=>document.getElementById(id), yen=n=>'¥'+Math.round(Number(n)||0).toLocaleString('ja-JP');
+const now=new Date(), localDate=d=>{let x=new Date(d.getTime()-d.getTimezoneOffset()*60000);return x.toISOString().slice(0,10)};
+$('month').value=localDate(now).slice(0,7);$('date').value=localDate(now);
+function openDB(){return new Promise((resolve,reject)=>{let r=indexedDB.open(DB,VERSION);r.onupgradeneeded=()=>{let d=r.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'});if(!d.objectStoreNames.contains(META))d.createObjectStore(META,{keyPath:'key'});};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
+function req(r){return new Promise((res,rej)=>{r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
+async function getAll(){records=await req(db.transaction(STORE).objectStore(STORE).getAll());let s=await req(db.transaction(META).objectStore(META).get('budget'));if(s)settings.budget=s.value;$('budget').value=settings.budget;render();}
+async function putRecord(x){await req(db.transaction(STORE,'readwrite').objectStore(STORE).put(x));}
+async function putSetting(){settings.budget=Math.max(0,Number($('budget').value)||0);await req(db.transaction(META,'readwrite').objectStore(META).put({key:'budget',value:settings.budget}));}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function filtered(){return allMonths?records:records.filter(x=>x.date?.slice(0,7)===$('month').value);}
+function render(){let a=filtered(),spent=a.reduce((s,x)=>s+(+x.amount||0),0),b=+settings.budget||0,left=b-spent,p=b?spent/b*100:0,rated=a.filter(x=>x.rating),avg=rated.length? rated.reduce((s,x)=>s+(+x.rating),0)/rated.length:0;
+$('spent').textContent=yen(spent);$('remaining').textContent=yen(left);$('remaining').style.color=left<0?'#b75a4a':'';$('percent').textContent='使用率 '+Math.round(p)+'%';$('bar').style.width=Math.min(100,Math.max(0,p))+'%';$('bar').style.background=p>=100?'#b75a4a':p>=80?'#d6a64a':'linear-gradient(90deg,#7ca978,#315d42)';
+$('average').textContent=avg?avg.toFixed(1)+' / 5':'—';$('shippingTotal').textContent=yen(a.reduce((s,x)=>s+(+x.extra||0),0));
+let alert=$('alert');alert.className='notice';if(!b)alert.textContent='予算を入力すると残額を表示するよ。';else if(p>=100){alert.className='notice over';alert.textContent='予算オーバー。追加購入はいったん保留して振り返ろう。'}else if(p>=80){alert.className='notice warn';alert.textContent='予算の80％を使ったよ。ここからはひと呼吸。'}else alert.textContent='いいペース。残り '+yen(left)+'。';
+$('impulse').textContent=yen(a.filter(x=>x.reason==='衝動買い').reduce((s,x)=>s+(+x.amount||0),0));$('extras').textContent=yen(a.filter(x=>x.reason==='送料対策・ついで買い').reduce((s,x)=>s+(+x.amount||0),0));$('count').textContent=a.length+'件';$('regret').textContent=a.filter(x=>x.rating&&x.rating<=2).length+'件';
+let ranked=a.filter(x=>x.rating).sort((x,y)=>y.rating-x.rating||y.amount-x.amount).slice(0,5);$('ranking').innerHTML=ranked.length?ranked.map((x,i)=>`<div class="rank"><span>${['🥇','🥈','🥉','🍀','🌱'][i]} ${esc(x.item)}<div class="stars">${'★'.repeat(x.rating)}${'☆'.repeat(5-x.rating)}</div></span><b>${yen(x.amount)}</b></div>`).join(''):'<div class="empty">買い物を評価するとランキングが育つよ。</div>';
+$('entries').innerHTML=a.length?a.slice().sort((x,y)=>y.date.localeCompare(x.date)||y.id-x.id).map(x=>`<div class="entry"><div><h3>${esc(x.item)}</h3><div class="meta">${esc(x.date)} · ${esc(x.reason)}${x.extra?' · 送料対策 '+yen(x.extra):''}${x.memo?'<br>'+esc(x.memo):''}</div>${x.rating?`<div class="stars">${'★'.repeat(x.rating)}${'☆'.repeat(5-x.rating)}</div>`:'<span class="hint">未評価</span>'}</div><div><div class="price">${yen(x.amount)}</div><button class="danger" data-delete="${x.id}">削除</button></div></div>`).join(''):'<div class="empty">この期間の記録はまだないよ 🌿</div>';
+}
+$('form').addEventListener('submit',async e=>{e.preventDefault();let amount=+$('amount').value,extra=+$('extra').value||0;if(amount<0||extra<0||extra>amount){alert('金額を確認してね。送料対策の追加分は購入金額以下にしてね。');return;}let x={id:crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random(),item:$('item').value.trim(),amount,date:$('date').value,reason:$('reason').value,rating:$('rating').value?+$('rating').value:null,extra,memo:$('memo').value.trim()};await putRecord(x);$('item').value='';$('amount').value='';$('rating').value='';$('extra').value='0';$('memo').value='';await getAll();});
+$('entries').addEventListener('click',async e=>{let id=e.target.dataset.delete;if(!id)return;if(confirm('この記録を削除する？')){await req(db.transaction(STORE,'readwrite').objectStore(STORE).delete(id));await getAll();}});
+$('budget').addEventListener('change',async()=>{await putSetting();render();});$('month').addEventListener('change',()=>{allMonths=false;render();});$('all').onclick=()=>{allMonths=true;render()};$('current').onclick=()=>{allMonths=false;$('month').value=localDate(new Date()).slice(0,7);render()};
+function download(blob,name){let u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1500);}
+$('backup').onclick=()=>download(new Blob([JSON.stringify({app:'komorebi-techo',version:2,exportedAt:new Date().toISOString(),budget:settings.budget,records},null,2)],{type:'application/json'}),'komorebi-backup-'+localDate(new Date())+'.json');
+$('restoreBtn').onclick=()=>$('restoreFile').click();
+$('restoreFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let obj=JSON.parse(await f.text());if(!obj||!Array.isArray(obj.records)||obj.app!=='komorebi-techo')throw Error('形式が違います');if(!confirm(`バックアップの${obj.records.length}件を取り込みます。既存データに追加します。同じIDは上書きされます。続ける？`))return;for(let x of obj.records){if(!x.id||!x.item||!x.date)continue;await putRecord(x);}if(obj.budget!=null){settings.budget=+obj.budget;$('budget').value=settings.budget;await putSetting();}await getAll();$('backupStatus').textContent='バックアップを復元しました。';}catch(err){alert('復元できませんでした：'+err.message)}e.target.value='';};
+$('csvOut').onclick=()=>{let rows=[['購入日','品名','金額','購入理由','満足度','送料対策追加額','メモ'],...records.map(x=>[x.date,x.item,x.amount,x.reason,x.rating||'',x.extra||0,x.memo||''])];let csv='\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');download(new Blob([csv],{type:'text/csv;charset=utf-8'}),'komorebi-records.csv');};
+$('csvIn').onclick=()=>$('csvFile').click();
+function parseCSV(s){let rows=[],row=[],v='',q=false;for(let i=0;i<s.length;i++){let c=s[i];if(q){if(c==='"'&&s[i+1]==='"'){v+='"';i++}else if(c==='"')q=false;else v+=c;}else if(c==='"')q=true;else if(c===','){row.push(v);v=''}else if(c==='\n'){row.push(v.replace(/\r$/,''));rows.push(row);row=[];v=''}else v+=c;}if(v.length||row.length){row.push(v);rows.push(row);}return rows;}
+$('csvFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let rows=parseCSV((await f.text()).replace(/^\uFEFF/,''));let added=0;for(let r of rows.slice(1)){if(r.length<3||!r[0]||!r[1])continue;let x={id:'csv-'+Date.now()+'-'+Math.random(),date:r[0],item:r[1],amount:+r[2]||0,reason:r[3]||'その他',rating:r[4]?+r[4]:null,extra:+r[5]||0,memo:r[6]||''};await putRecord(x);added++;}await getAll();$('backupStatus').textContent=`CSVから${added}件を読み込みました。`;}catch(err){alert('CSVを読み込めませんでした：'+err.message)}e.target.value='';};
+(async()=>{try{if(!('indexedDB'in window))throw Error('IndexedDBが使えません');db=await openDB();await getAll();$('backupStatus').textContent='IndexedDBで保存中。記録は入力のたびに自動保存されます。機種変更前にJSONバックアップを作成してね。';if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});}catch(e){$('backupStatus').textContent='保存領域を開けませんでした。HTTPSで公開したURLから開いてください。';}})();
+</script>
+</body></html>
