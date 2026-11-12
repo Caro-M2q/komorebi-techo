@@ -1,6 +1,5 @@
-const CACHE = 'komorebi-techo-v4';
+const CACHE = 'komorebi-techo-v5';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
-
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
@@ -8,7 +7,6 @@ self.addEventListener('install', event => {
     await self.skipWaiting();
   })());
 });
-
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
@@ -16,7 +14,6 @@ self.addEventListener('activate', event => {
     await self.clients.claim();
   })());
 });
-
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
@@ -24,7 +21,7 @@ self.addEventListener('fetch', event => {
   if (isAppPage) {
     event.respondWith((async () => {
       try {
-        const response = await fetch(event.request);
+        const response = await fetch(event.request, {cache: 'no-store'});
         if (response && response.ok) {
           const cache = await caches.open(CACHE);
           await cache.put('./index.html', response.clone());
@@ -46,8 +43,6 @@ self.addEventListener('fetch', event => {
         await cache.put(event.request, response.clone());
       }
       return response;
-    } catch (_) {
-      return Response.error();
-    }
+    } catch (_) { return Response.error(); }
   })());
 });
